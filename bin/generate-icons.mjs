@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
+import toIco from 'to-ico';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const iconSvg = fs.readFileSync(path.join(root, 'public/os_icon.svg'));
@@ -26,3 +27,13 @@ for (const [filename, size] of outputs) {
     .toFile(outPath);
   console.log(`Wrote ${filename}`);
 }
+
+const faviconSizes = [16, 32, 48];
+const faviconPngs = await Promise.all(
+  faviconSizes.map((size) =>
+    sharp(iconSvg).resize(size, size).png().toBuffer()
+  )
+);
+const faviconIco = await toIco(faviconPngs);
+fs.writeFileSync(path.join(root, 'public', 'favicon.ico'), faviconIco);
+console.log('Wrote favicon.ico');
