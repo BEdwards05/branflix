@@ -53,6 +53,70 @@ Environment variables (optional):
 | `LOG_LEVEL` | `info` | Log verbosity |
 | `TZ` | `UTC` | Container timezone |
 
+## Updating
+
+BranFlix does not check Seerr for updates. Deploy new versions manually from this
+repository (watch [releases](https://github.com/BEdwards05/branflix/releases) or
+`main`).
+
+### Before you update
+
+1. Back up your `config/` folder (especially `settings.json` and `db/db.sqlite3`).
+2. Stop the running instance so the database is not written mid-update.
+
+```bash
+cp -a config "config.backup.$(date +%Y%m%d)"
+```
+
+### Docker
+
+From your BranFlix clone on the host:
+
+```bash
+git fetch origin
+git checkout main
+git pull
+
+docker compose down
+docker compose up -d --build
+```
+
+Configuration is stored in `./config` on the host, so it survives image rebuilds.
+The local image (`branflix:local`) must be rebuilt after each pull.
+
+To deploy a specific version:
+
+```bash
+git fetch --tags
+git checkout <tag>    # e.g. v0.1.0
+docker compose up -d --build
+```
+
+### From source
+
+```bash
+git pull
+pnpm install
+pnpm build
+pnpm start
+```
+
+Restart whatever process manager you use if BranFlix is not started directly
+with `pnpm start`.
+
+### Migrating from Seerr
+
+You can point BranFlix at an existing Seerr `config/` directory (or copy it
+into place before first start). This works best for **Plex + SQLite** setups.
+Jellyfin and Emby configurations are not supported. Back up first, then verify
+Plex sign-in, libraries, and Radarr/Sonarr after the first boot.
+
+### After updating
+
+- Confirm sign-in, Plex libraries, and a test request.
+- Check **Settings → About** for the running version.
+- Restart the container or process if prompted after settings changes.
+
 ## API documentation
 
 When running locally: http://localhost:5055/api-docs
