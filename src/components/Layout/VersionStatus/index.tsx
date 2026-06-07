@@ -1,6 +1,5 @@
 import defineMessages from '@app/utils/defineMessages';
 import {
-  ArrowUpCircleIcon,
   BeakerIcon,
   CodeBracketIcon,
   ServerIcon,
@@ -13,9 +12,6 @@ import useSWR from 'swr';
 const messages = defineMessages('components.Layout.VersionStatus', {
   streamdevelop: 'BranFlix Develop',
   streamstable: 'BranFlix Stable',
-  outofdate: 'Out of Date',
-  commitsbehind:
-    '{commitsBehind} {commitsBehind, plural, one {commit} other {commits}} behind',
 });
 
 interface VersionStatusProps {
@@ -50,11 +46,7 @@ const VersionStatus = ({ onClick }: VersionStatusProps) => {
       }}
       role="button"
       tabIndex={0}
-      className={`mx-2 flex items-center rounded-lg p-2 text-xs ring-1 ring-gray-700 transition duration-300 ${
-        data.updateAvailable
-          ? 'bg-yellow-500 text-white hover:bg-yellow-400'
-          : 'bg-gray-900 text-gray-300 hover:bg-gray-800'
-      }`}
+      className="mx-2 flex items-center rounded-lg bg-gray-900 p-2 text-xs text-gray-300 ring-1 ring-gray-700 transition duration-300 hover:bg-gray-800"
     >
       {data.commitTag === 'local' ? (
         <CodeBracketIcon className="h-6 w-6" />
@@ -68,12 +60,6 @@ const VersionStatus = ({ onClick }: VersionStatusProps) => {
         <span className="truncate">
           {data.commitTag === 'local' ? (
             '(⌐■_■)'
-          ) : data.commitsBehind > 0 ? (
-            intl.formatMessage(messages.commitsbehind, {
-              commitsBehind: data.commitsBehind,
-            })
-          ) : data.commitsBehind === -1 ? (
-            intl.formatMessage(messages.outofdate)
           ) : (
             <code className="bg-transparent p-0">
               {data.version.replace('develop-', '')}
@@ -81,7 +67,6 @@ const VersionStatus = ({ onClick }: VersionStatusProps) => {
           )}
         </span>
       </div>
-      {data.updateAvailable && <ArrowUpCircleIcon className="h-6 w-6" />}
     </Link>
   );
 };

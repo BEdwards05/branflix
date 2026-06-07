@@ -2,7 +2,6 @@ import Alert from '@app/components/Common/Alert';
 import List from '@app/components/Common/List';
 import LoadingSpinner from '@app/components/Common/LoadingSpinner';
 import PageTitle from '@app/components/Common/PageTitle';
-import Releases from '@app/components/Settings/SettingsAbout/Releases';
 import globalMessages from '@app/i18n/globalMessages';
 import ErrorPage from '@app/pages/_error';
 import defineMessages from '@app/utils/defineMessages';
@@ -17,12 +16,11 @@ const messages = defineMessages('components.Settings.SettingsAbout', {
   totalmedia: 'Total Media',
   totalrequests: 'Total Requests',
   gettingsupport: 'Getting Support',
-  githubdiscussions: 'GitHub Discussions',
+  githubrepo: 'GitHub Repository',
   timezone: 'Time Zone',
   appDataPath: 'Data Directory',
   upstream: 'Upstream Project',
   contribute: 'Seerr (upstream)',
-  documentation: 'Seerr Documentation',
   outofdate: 'Out of Date',
   uptodate: 'Up to Date',
   runningDevelop:
@@ -88,34 +86,14 @@ const SettingsAbout = () => {
       </div>
       <div className="section">
         <List title={intl.formatMessage(messages.gettingsupport)}>
-          <List.Item title={intl.formatMessage(messages.documentation)}>
+          <List.Item title={intl.formatMessage(messages.githubrepo)}>
             <a
-              href="https://docs.seerr.dev"
+              href="https://github.com/BEdwards05/branflix"
               target="_blank"
               rel="noreferrer"
               className="text-indigo-400 transition duration-300 hover:underline"
             >
-              https://docs.seerr.dev
-            </a>
-          </List.Item>
-          <List.Item title={intl.formatMessage(messages.githubdiscussions)}>
-            <a
-              href="https://github.com/seerr-team/seerr/discussions"
-              target="_blank"
-              rel="noreferrer"
-              className="text-indigo-400 transition duration-300 hover:underline"
-            >
-              https://github.com/seerr-team/seerr/discussions
-            </a>
-          </List.Item>
-          <List.Item title="Discord">
-            <a
-              href="https://discord.gg/seerr"
-              target="_blank"
-              rel="noreferrer"
-              className="text-indigo-400 transition duration-300 hover:underline"
-            >
-              https://discord.gg/seerr
+              https://github.com/BEdwards05/branflix
             </a>
           </List.Item>
         </List>
@@ -133,9 +111,6 @@ const SettingsAbout = () => {
             </a>
           </List.Item>
         </List>
-      </div>
-      <div className="section">
-        <Releases currentVersion={data.version} />
       </div>
     </>
   );
