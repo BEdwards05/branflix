@@ -19,8 +19,6 @@ const messages = defineMessages('components.Settings.SettingsAbout', {
   githubrepo: 'GitHub Repository',
   timezone: 'Time Zone',
   appDataPath: 'Data Directory',
-  upstream: 'Upstream Project',
-  contribute: 'Seerr (upstream)',
   outofdate: 'Out of Date',
   uptodate: 'Up to Date',
   runningDevelop:
@@ -94,20 +92,6 @@ const SettingsAbout = () => {
               className="text-indigo-400 transition duration-300 hover:underline"
             >
               https://github.com/BEdwards05/branflix
-            </a>
-          </List.Item>
-        </List>
-      </div>
-      <div className="section">
-        <List title={intl.formatMessage(messages.upstream)}>
-          <List.Item title={intl.formatMessage(messages.contribute)}>
-            <a
-              href="https://github.com/seerr-team/seerr"
-              target="_blank"
-              rel="noreferrer"
-              className="text-indigo-400 transition duration-300 hover:underline"
-            >
-              https://github.com/seerr-team/seerr
             </a>
           </List.Item>
         </List>
