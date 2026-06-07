@@ -28,7 +28,10 @@ class PlexOAuth {
 
   private authToken?: string;
 
-  public initializeHeaders(plexClientIdentifier: string): void {
+  public initializeHeaders(
+    plexClientIdentifier: string,
+    productName = 'BranFlix'
+  ): void {
     if (typeof window === 'undefined') {
       throw new Error(
         'Window is not defined. Are you calling this in the browser?'
@@ -44,14 +47,14 @@ class PlexOAuth {
     const browser = Bowser.getParser(window.navigator.userAgent);
     this.plexHeaders = {
       Accept: 'application/json',
-      'X-Plex-Product': 'BranFlix',
+      'X-Plex-Product': productName,
       'X-Plex-Version': 'Plex OAuth',
       'X-Plex-Client-Identifier': plexClientIdentifier,
       'X-Plex-Model': 'Plex OAuth',
       'X-Plex-Platform': browser.getBrowserName(),
       'X-Plex-Platform-Version': browser.getBrowserVersion() || 'Unknown',
       'X-Plex-Device': browser.getOSName(),
-      'X-Plex-Device-Name': `${browser.getBrowserName()} (BranFlix)`,
+      'X-Plex-Device-Name': `${browser.getBrowserName()} (${productName})`,
       'X-Plex-Device-Screen-Resolution':
         window.screen.width + 'x' + window.screen.height,
       'X-Plex-Language': 'en',
@@ -79,9 +82,12 @@ class PlexOAuth {
     this.openPopup({ title: 'Plex Auth', w: 600, h: 700 });
   }
 
-  public async login(plexClientIdentifier: string): Promise<string> {
+  public async login(
+    plexClientIdentifier: string,
+    productName = 'BranFlix'
+  ): Promise<string> {
     try {
-      this.initializeHeaders(plexClientIdentifier);
+      this.initializeHeaders(plexClientIdentifier, productName);
       await this.getPin();
     } catch (e) {
       this.closePopup();

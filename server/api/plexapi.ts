@@ -103,6 +103,7 @@ class PlexAPI extends ExternalAPI {
   }) {
     const settings = getSettings();
     const settingsPlex = plexSettings ?? settings.plex;
+    const appName = settings.main.applicationTitle || 'BranFlix';
 
     const protocol = settingsPlex.useSsl ? 'https' : 'http';
     const baseUrl = `${protocol}://${settingsPlex.ip}:${settingsPlex.port}`;
@@ -115,9 +116,9 @@ class PlexAPI extends ExternalAPI {
         headers: {
           'X-Plex-Token': plexToken ?? '',
           'X-Plex-Client-Identifier': settings.clientId,
-          'X-Plex-Product': 'Seerr',
-          'X-Plex-Device-Name': 'Seerr',
-          'X-Plex-Platform': 'Seerr',
+          'X-Plex-Product': appName,
+          'X-Plex-Device-Name': appName,
+          'X-Plex-Platform': appName,
         },
       }
     );

@@ -18,7 +18,8 @@ function usePlexLogin({
     setLoading(true);
     try {
       const authToken = await plexOAuth.login(
-        currentSettings.plexClientIdentifier
+        currentSettings.plexClientIdentifier,
+        currentSettings.applicationTitle || 'BranFlix'
       );
       setLoading(false);
       onAuthToken(authToken);

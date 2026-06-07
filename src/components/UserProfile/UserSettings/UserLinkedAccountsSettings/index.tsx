@@ -88,7 +88,8 @@ const UserLinkedAccountsSettings = () => {
     setError(null);
     try {
       const authToken = await plexOAuth.login(
-        settings.currentSettings.plexClientIdentifier
+        settings.currentSettings.plexClientIdentifier,
+        settings.currentSettings.applicationTitle || 'BranFlix'
       );
       await axios.post(
         `/api/v1/user/${user?.id}/settings/linked-accounts/plex`,
