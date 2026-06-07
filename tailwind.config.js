@@ -11,6 +11,40 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        // Plex-inspired gold palette (remaps existing indigo-* classes app-wide)
+        indigo: {
+          50: '#fff9e8',
+          100: '#fff0c2',
+          200: '#ffe08a',
+          300: '#f0c040',
+          400: '#e5a00d',
+          500: '#e5a00d',
+          600: '#cc7b19',
+          700: '#a86410',
+          800: '#8a5210',
+          900: '#6b400d',
+          950: '#3d2407',
+        },
+        brand: {
+          50: '#fff9e8',
+          100: '#fff0c2',
+          200: '#ffe08a',
+          300: '#f0c040',
+          400: '#e5a00d',
+          500: '#e5a00d',
+          600: '#cc7b19',
+          700: '#a86410',
+          800: '#8a5210',
+          900: '#6b400d',
+        },
+        gray: {
+          ...defaultTheme.colors.gray,
+          800: '#282a2d',
+          900: '#1a1a1a',
+          950: '#111111',
+        },
+      },
       transitionProperty: {
         'max-height': 'max-height',
         width: 'width',
@@ -86,8 +120,11 @@ module.exports = {
     },
   },
   plugins: [
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     require('@tailwindcss/forms'),
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     require('@tailwindcss/typography'),
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     require('@tailwindcss/aspect-ratio'),
   ],
 };

@@ -1,15 +1,17 @@
 {
-  "name": "seerr",
+  "name": "branflix",
   "version": "0.1.0",
   "private": true,
   "packageManager": "pnpm@10.24.0",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "postinstall": "next telemetry disable",
-    "dev": "nodemon -e ts,json,yml --watch server --watch seerr-api.yml --exec 'ts-node -r tsconfig-paths/register --files --project server/tsconfig.json server/index.ts'",
+    "predev": "node bin/predev.mjs",
+    "dev": "nodemon -e ts,json,yml --watch server --watch branflix-api.yml --exec 'ts-node -r tsconfig-paths/register --files --project server/tsconfig.json server/index.ts'",
+    "dev:stop": "node bin/stop-dev.mjs",
     "build:server": "tsc --project server/tsconfig.json && copyfiles -u 2 server/templates/**/*.{html,pug} dist/templates && copyfiles -u 2 \"server/i18n/locale/*.json\" dist/i18n && tsc-alias -p server/tsconfig.json",
     "build:next": "next build",
-    "build": "pnpm build:next && pnpm build:server",
+    "build": "next build && tsc --project server/tsconfig.json && copyfiles -u 2 server/templates/**/*.{html,pug} dist/templates && copyfiles -u 2 \"server/i18n/locale/*.json\" dist/i18n && tsc-alias -p server/tsconfig.json",
     "lint": "eslint \"./server/**/*.{ts,tsx}\" \"./src/**/*.{ts,tsx}\" --cache",
     "lintfix": "eslint \"./server/**/*.{ts,tsx}\" \"./src/**/*.{ts,tsx}\" --fix",
     "test": "node server/test/index.mts",
@@ -20,17 +22,13 @@
     "migration:run": "ts-node -r tsconfig-paths/register --project server/tsconfig.json ./node_modules/typeorm/cli.js migration:run -d server/datasource.ts",
     "format": "prettier --log-level warn --write --cache .",
     "format:check": "prettier --check --cache .",
-    "typecheck": "pnpm typecheck:server && pnpm typecheck:client",
+    "typecheck": "tsc --project server/tsconfig.json --noEmit && tsc --noEmit",
     "typecheck:server": "tsc --project server/tsconfig.json --noEmit",
     "typecheck:client": "tsc --noEmit",
     "prepare": "node bin/prepare.mjs",
     "cypress:open": "cypress open",
     "cypress:prepare": "ts-node -r tsconfig-paths/register --files --project server/tsconfig.json server/scripts/prepareTestDb.ts",
     "cypress:build": "pnpm build && pnpm cypress:prepare"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/seerr-team/seerr.git"
   },
   "license": "MIT",
   "dependencies": {

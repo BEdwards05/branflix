@@ -207,7 +207,7 @@ const MobileMenu = ({
                 pendingRequestsCount > 0 &&
                 hasPermission(Permission.MANAGE_REQUESTS) && (
                   <div className="ml-auto flex">
-                    <Badge className="rounded-md border-indigo-500 bg-gradient-to-br from-indigo-600 to-purple-600">
+                    <Badge className="rounded-md border-indigo-500 bg-gradient-to-br from-indigo-500 to-indigo-700">
                       {pendingRequestsCount}
                     </Badge>
                   </div>
@@ -216,7 +216,7 @@ const MobileMenu = ({
                 openIssuesCount > 0 &&
                 hasPermission(Permission.MANAGE_ISSUES) && (
                   <div className="ml-auto flex">
-                    <Badge className="rounded-md border-indigo-500 bg-gradient-to-br from-indigo-600 to-purple-600">
+                    <Badge className="rounded-md border-indigo-500 bg-gradient-to-br from-indigo-500 to-indigo-700">
                       {openIssuesCount}
                     </Badge>
                   </div>
@@ -253,8 +253,8 @@ const MobileMenu = ({
                         <Badge
                           className={`bg-gradient-to-br ${
                             router.pathname.match(link.activeRegExp)
-                              ? 'border-indigo-600 from-indigo-700 to-purple-700'
-                              : 'border-indigo-500 from-indigo-600 to-purple-600'
+                              ? 'border-indigo-600 from-indigo-700 to-indigo-800'
+                              : 'border-indigo-500 from-indigo-600 to-indigo-700'
                           } flex ${
                             pendingRequestsCount > 99 ? 'w-6' : 'w-4'
                           } h-4 items-center justify-center !px-[5px] !py-[7px] text-[8px]`}

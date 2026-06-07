@@ -1,6 +1,4 @@
-import EmbyLogo from '@app/assets/services/emby.svg';
 import ImdbLogo from '@app/assets/services/imdb.svg';
-import JellyfinLogo from '@app/assets/services/jellyfin.svg';
 import LetterboxdLogo from '@app/assets/services/letterboxd.svg';
 import PlexLogo from '@app/assets/services/plex.svg';
 import RTLogo from '@app/assets/services/rt.svg';
@@ -8,9 +6,7 @@ import TmdbLogo from '@app/assets/services/tmdb.svg';
 import TraktLogo from '@app/assets/services/trakt.svg';
 import TvdbLogo from '@app/assets/services/tvdb.svg';
 import useLocale from '@app/hooks/useLocale';
-import useSettings from '@app/hooks/useSettings';
 import { MediaType } from '@server/constants/media';
-import { MediaServerType } from '@server/constants/server';
 
 type ExternalLinkType = 'movie' | 'tv' | 'person';
 
@@ -31,7 +27,6 @@ const ExternalLinkBlock = ({
   rtUrl,
   mediaUrl,
 }: ExternalLinkBlockProps) => {
-  const settings = useSettings();
   const { locale } = useLocale();
 
   return (
@@ -43,14 +38,7 @@ const ExternalLinkBlock = ({
           target="_blank"
           rel="noreferrer"
         >
-          {settings.currentSettings.mediaServerType === MediaServerType.PLEX ? (
-            <PlexLogo />
-          ) : settings.currentSettings.mediaServerType ===
-            MediaServerType.EMBY ? (
-            <EmbyLogo />
-          ) : (
-            <JellyfinLogo />
-          )}
+          <PlexLogo />
         </a>
       )}
       {tmdbId && (

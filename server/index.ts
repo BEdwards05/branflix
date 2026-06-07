@@ -46,23 +46,23 @@ import next from 'next';
 import path from 'path';
 import swaggerUi from 'swagger-ui-express';
 
-const API_SPEC_PATH = path.join(__dirname, '../seerr-api.yml');
+const API_SPEC_PATH = path.join(__dirname, '../branflix-api.yml');
 
-logger.info(`Starting Seerr version ${getAppVersion()}`);
+logger.info(`Starting BranFlix version ${getAppVersion()}`);
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
 if (!appDataPermissions()) {
   logger.error(
-    'Something went wrong while checking config folder! Please ensure the config folder is set up properly.\nhttps://docs.seerr.dev/getting-started'
+    'Something went wrong while checking config folder! Please ensure the config folder is set up properly. See README.md for setup instructions.'
   );
 }
 
 app
   .prepare()
   .then(async () => {
-    // Run Overseerr to Seerr migration
+    // Run Overseerr to BranFlix migration
     await checkOverseerrMerge();
 
     const dbConnection = dataSource.isInitialized

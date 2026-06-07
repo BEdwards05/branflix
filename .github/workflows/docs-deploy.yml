@@ -10,7 +10,7 @@ on:
     paths:
       - 'docs/**'
       - 'gen-docs/**'
-      - 'seerr-api.yml'
+      - 'branflix-api.yml'
 
 permissions:
   contents: read

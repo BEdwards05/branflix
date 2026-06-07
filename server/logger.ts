@@ -15,16 +15,16 @@ const hformat = winston.format.printf(
   }
 );
 
-const seerrFileTransport = new winston.transports.DailyRotateFile({
+const branflixFileTransport = new winston.transports.DailyRotateFile({
   filename: process.env.CONFIG_DIRECTORY
-    ? `${process.env.CONFIG_DIRECTORY}/logs/seerr-%DATE%.log`
-    : path.join(__dirname, '../config/logs/seerr-%DATE%.log'),
+    ? `${process.env.CONFIG_DIRECTORY}/logs/branflix-%DATE%.log`
+    : path.join(__dirname, '../config/logs/branflix-%DATE%.log'),
   datePattern: 'YYYY-MM-DD',
   zippedArchive: true,
   maxSize: '20m',
   maxFiles: '7d',
   createSymlink: true,
-  symlinkName: 'seerr.log',
+  symlinkName: 'branflix.log',
 });
 const machineLogFileTransport = new winston.transports.DailyRotateFile({
   filename: process.env.CONFIG_DIRECTORY
@@ -43,8 +43,8 @@ const machineLogFileTransport = new winston.transports.DailyRotateFile({
   ),
 });
 
-seerrFileTransport.on('error', (err) => {
-  console.error('Error in seerr file transport:', err);
+branflixFileTransport.on('error', (err) => {
+  console.error('Error in branflix file transport:', err);
 });
 
 machineLogFileTransport.on('error', (err) => {
@@ -67,7 +67,7 @@ const logger = winston.createLogger({
         hformat
       ),
     }),
-    seerrFileTransport,
+    branflixFileTransport,
     machineLogFileTransport,
   ],
 });

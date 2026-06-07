@@ -1,0 +1,16 @@
+services:
+  branflix:
+    build:
+      context: .
+      args:
+        COMMIT_TAG: local
+    image: branflix:local
+    container_name: branflix
+    ports:
+      - "${HOST_PORT:-5055}:5055"
+    volumes:
+      - ./config:/app/config
+    environment:
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+      TZ: ${TZ:-UTC}
+    restart: unless-stopped

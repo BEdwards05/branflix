@@ -403,7 +403,7 @@ class Settings {
       vapidPublic: '',
       main: {
         apiKey: '',
-        applicationTitle: 'Seerr',
+        applicationTitle: 'BranFlix',
         applicationUrl: '',
         cacheImages: false,
         defaultPermissions: Permission.REQUEST,
@@ -472,7 +472,7 @@ class Settings {
               ignoreTls: false,
               requireTls: false,
               allowSelfSigned: false,
-              senderName: 'Seerr',
+              senderName: 'BranFlix',
               usePublicLogo: false,
             },
           },

@@ -75,7 +75,7 @@ const config: Config = {
         docsPluginId: 'classic',
         config: {
           seerr: {
-            specPath: '../seerr-api.yml',
+            specPath: '../branflix-api.yml',
             outputDir: '../docs/api',
             sidebarOptions: {
               groupPathsBy: 'tag',

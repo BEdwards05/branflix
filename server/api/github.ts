@@ -1,5 +1,4 @@
 import cacheManager from '@server/lib/cache';
-import logger from '@server/logger';
 import ExternalAPI from './externalapi';
 
 interface GitHubRelease {
@@ -76,57 +75,12 @@ class GithubAPI extends ExternalAPI {
     );
   }
 
-  public async getSeerrReleases({
-    take = 20,
-  }: {
-    take?: number;
-  } = {}): Promise<GitHubRelease[]> {
-    try {
-      const data = await this.get<GitHubRelease[]>(
-        '/repos/seerr-team/seerr/releases',
-        {
-          params: {
-            per_page: take,
-          },
-        }
-      );
-
-      return data;
-    } catch (e) {
-      logger.warn(
-        "Failed to retrieve GitHub releases. This may be an issue on GitHub's end. Seerr can't check if it's on the latest version.",
-        { label: 'GitHub API', errorMessage: e.message }
-      );
-      return [];
-    }
+  public async getSeerrReleases(): Promise<GitHubRelease[]> {
+    return [];
   }
 
-  public async getSeerrCommits({
-    take = 20,
-    branch = 'develop',
-  }: {
-    take?: number;
-    branch?: string;
-  } = {}): Promise<GithubCommit[]> {
-    try {
-      const data = await this.get<GithubCommit[]>(
-        '/repos/seerr-team/seerr/commits',
-        {
-          params: {
-            per_page: take,
-            branch,
-          },
-        }
-      );
-
-      return data;
-    } catch (e) {
-      logger.warn(
-        "Failed to retrieve GitHub commits. This may be an issue on GitHub's end. Seerr can't check if it's on the latest version.",
-        { label: 'GitHub API', errorMessage: e.message }
-      );
-      return [];
-    }
+  public async getSeerrCommits(): Promise<GithubCommit[]> {
+    return [];
   }
 }
 

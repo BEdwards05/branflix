@@ -1,6 +1,6 @@
 {
-  "name": "Seerr",
-  "short_name": "Seerr",
+  "name": "BranFlix",
+  "short_name": "BranFlix",
   "start_url": "./",
   "icons": [
     {
@@ -28,8 +28,8 @@
       "purpose": "maskable"
     }
   ],
-  "theme_color": "#1f2937",
-  "background_color": "#1f2937",
+  "theme_color": "#e5a00d",
+  "background_color": "#1a1a1a",
   "display": "standalone",
   "shortcuts": [
     {

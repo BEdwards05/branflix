@@ -29,7 +29,6 @@ import {
   PencilIcon,
   UserPlusIcon,
 } from '@heroicons/react/24/solid';
-import { MediaServerType } from '@server/constants/server';
 import type { UserResultsResponse } from '@server/interfaces/api/userInterfaces';
 import { hasPermission } from '@server/lib/permissions';
 import axios from 'axios';
@@ -41,7 +40,6 @@ import { useIntl } from 'react-intl';
 import useSWR from 'swr';
 import validator from 'validator';
 import * as Yup from 'yup';
-import JellyfinImportModal from './JellyfinImportModal';
 
 const messages = defineMessages('components.UserList', {
   users: 'Users',
@@ -592,25 +590,13 @@ const UserList = () => {
         leaveTo="opacity-0"
         show={showImportModal}
       >
-        {settings.currentSettings.mediaServerType === MediaServerType.PLEX ? (
-          <PlexImportModal
-            onCancel={() => setShowImportModal(false)}
-            onComplete={() => {
-              setShowImportModal(false);
-              revalidate();
-            }}
-          />
-        ) : (
-          <JellyfinImportModal
-            onCancel={() => setShowImportModal(false)}
-            onComplete={() => {
-              setShowImportModal(false);
-              revalidate();
-            }}
-          >
-            {data.pageInfo.results}
-          </JellyfinImportModal>
-        )}
+        <PlexImportModal
+          onCancel={() => setShowImportModal(false)}
+          onComplete={() => {
+            setShowImportModal(false);
+            revalidate();
+          }}
+        />
       </Transition>
 
       <div className="flex flex-col justify-between lg:flex-row lg:items-end">
@@ -632,19 +618,9 @@ const UserList = () => {
             >
               <InboxArrowDownIcon />
               <span>
-                {settings.currentSettings.mediaServerType ===
-                MediaServerType.EMBY
-                  ? intl.formatMessage(messages.importfrommediaserver, {
-                      mediaServerName: 'Emby',
-                    })
-                  : settings.currentSettings.mediaServerType ===
-                      MediaServerType.PLEX
-                    ? intl.formatMessage(messages.importfrommediaserver, {
-                        mediaServerName: 'Plex',
-                      })
-                    : intl.formatMessage(messages.importfrommediaserver, {
-                        mediaServerName: 'Jellyfin',
-                      })}
+                {intl.formatMessage(messages.importfrommediaserver, {
+                  mediaServerName: 'Plex',
+                })}
               </span>
             </Button>
           </div>

@@ -1,0 +1,18 @@
+BranFlix
+
+Copyright (c) BranFlix contributors
+
+This project is a fork of Seerr (https://github.com/seerr-team/seerr),
+which is licensed under the MIT License.
+
+Seerr is a fork/evolution of Overseerr and Jellyseerr. BranFlix retains
+the MIT license from upstream. See LICENSE for the full license text.
+
+Upstream attribution:
+- Seerr: https://github.com/seerr-team/seerr
+- Overseerr: https://github.com/sct/overseerr
+- Jellyseerr: https://github.com/Fallenbagel/jellyseerr
+
+BranFlix modifications:
+- Rebranded as BranFlix
+- Plex-only media server support (Jellyfin and Emby removed)
