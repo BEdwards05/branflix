@@ -192,7 +192,12 @@ const Sidebar = ({
                     <div className="flex flex-shrink-0 items-center px-2">
                       <span className="w-full px-4 text-xl text-gray-50">
                         <Link href="/" className="relative block h-24 w-64">
-                          <Image src="/logo_full.svg" alt="Logo" fill />
+                          <Image
+                            src="/logo_full.svg"
+                            alt="Logo"
+                            fill
+                            className="object-contain object-center"
+                          />
                         </Link>
                       </span>
                     </div>
@@ -260,6 +265,7 @@ const Sidebar = ({
                       alt="Logo"
                       fill
                       loading="eager"
+                      className="object-contain object-center"
                     />
                   </Link>
                 </span>

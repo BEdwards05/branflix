@@ -98,12 +98,11 @@ const Login = () => {
           onClick={() => setMediaServerLogin(false)}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/os_icon.svg"
-            alt={settings.currentSettings.applicationTitle}
-            className="mr-2 h-5"
-          />
-          <span>{settings.currentSettings.applicationTitle}</span>
+          <img src="/plex-mark.svg" alt="" className="mr-2 h-5 w-auto" />
+          <span>
+            <span className="text-white">Bran</span>
+            <span className="text-[#EAAF20]">Flix</span>
+          </span>
         </Button>
       ) : (
         <Button
@@ -133,7 +132,12 @@ const Login = () => {
       </div>
       <div className="relative z-40 mt-10 flex flex-col items-center px-4 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="relative h-48 w-full max-w-full">
-          <Image src="/logo_stacked.svg" alt="Logo" fill />
+          <Image
+            src="/logo_stacked.svg"
+            alt="Logo"
+            fill
+            className="object-contain object-center"
+          />
         </div>
       </div>
       <div className="relative z-50 mt-8 sm:mx-auto sm:w-full sm:max-w-md">
