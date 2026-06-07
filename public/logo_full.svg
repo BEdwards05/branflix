@@ -1,6 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="320" height="80" viewBox="0 0 320 80" fill="none">
-  <rect x="4" y="8" width="64" height="64" rx="14" fill="#1a1a1a"/>
-  <polygon fill="#E5A00D" points="44,20 44,60 68,40"/>
-  <polygon fill="#E5A00D" opacity="0.6" points="32,20 32,60 8,40"/>
-  <text x="88" y="50" font-family="Inter, Arial, sans-serif" font-size="36" font-weight="700" fill="#ffffff" dominant-baseline="middle">BranFlix</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 56" width="240" height="56" fill="none" preserveAspectRatio="xMidYMid meet">
+  <!-- Icon 31.96×43.7 + 10px gap + ~157px text = 198.96 total width -->
+  <g transform="translate(120 28)">
+    <g transform="translate(-99.48 0)">
+      <g transform="translate(0 -22) scale(0.47)">
+        <polygon
+          fill="#EAAF20"
+          points="33.5,46.6 0,0 34.5,0 67.7,46.6 34.5,92.9 0,92.9"
+        />
+      </g>
+      <text
+        x="119.48"
+        y="0"
+        text-anchor="middle"
+        dominant-baseline="central"
+        font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+        font-size="36"
+        font-weight="700"
+        letter-spacing="-0.02em"
+      >
+        <tspan fill="#FFFFFF">Bran</tspan><tspan fill="#EAAF20">Flix</tspan>
+      </text>
+    </g>
+  </g>
 </svg>
