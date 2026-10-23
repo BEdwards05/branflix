@@ -8,6 +8,7 @@
 .gitconfig
 .github
 .gitignore
+.pnpm-store
 .husky
 .next
 .prettierignore
@@ -20,6 +21,7 @@ cypress
 dist
 Dockerfile*
 compose.yaml
+compose.dev.yaml
 gen-docs
 docs
 LICENSE

@@ -1,3 +1,5 @@
+# Production stack. `docker compose` uses this file once compose.yaml is absent.
+# Local bind-mount development: docker compose -f compose.dev.yaml up
 services:
   branflix:
     build:
@@ -9,6 +11,7 @@ services:
     ports:
       - "${HOST_PORT:-5055}:5055"
     volumes:
+      # Image user is UID 1000. After the old rootful stack: chown -R 1000:1000 ./config
       - ./config:/app/config
     environment:
       LOG_LEVEL: ${LOG_LEVEL:-info}

@@ -2,6 +2,7 @@ import ImdbLogo from '@app/assets/services/imdb.svg';
 import LetterboxdLogo from '@app/assets/services/letterboxd.svg';
 import PlexLogo from '@app/assets/services/plex.svg';
 import RTLogo from '@app/assets/services/rt.svg';
+import SimklLogo from '@app/assets/services/simkl.svg';
 import TmdbLogo from '@app/assets/services/tmdb.svg';
 import TraktLogo from '@app/assets/services/trakt.svg';
 import TvdbLogo from '@app/assets/services/tvdb.svg';
@@ -30,7 +31,7 @@ const ExternalLinkBlock = ({
   const { locale } = useLocale();
 
   return (
-    <div className="flex w-full items-center justify-center space-x-5">
+    <div className="flex w-full items-center justify-center space-x-2 sm:space-x-5">
       {mediaUrl && (
         <a
           href={mediaUrl}
@@ -101,6 +102,19 @@ const ExternalLinkBlock = ({
           rel="noreferrer"
         >
           <TraktLogo />
+        </a>
+      )}
+      {imdbId && mediaType !== 'person' && (
+        <a
+          href={`https://api.simkl.com/redirect?to=Simkl&imdb=${encodeURIComponent(
+            imdbId
+          )}`}
+          aria-label="Simkl"
+          className="w-8 opacity-50 transition duration-300 hover:opacity-100"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <SimklLogo />
         </a>
       )}
       {tmdbId && mediaType === MediaType.MOVIE && (

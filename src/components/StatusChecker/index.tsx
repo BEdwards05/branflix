@@ -9,6 +9,11 @@ import { Fragment, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import useSWR from 'swr';
 
+const COMMIT_MISMATCH_KEY = 'branflix-status-commit-mismatch';
+
+const normalizeCommitTag = (tag?: string | null): string =>
+  tag && tag.trim() ? tag : 'local';
+
 const messages = defineMessages('components.StatusChecker', {
   appUpdated: '{applicationTitle} Updated',
   appUpdatedDescription:
@@ -23,16 +28,37 @@ const StatusChecker = () => {
   const intl = useIntl();
   const settings = useSettings();
   const { hasPermission } = useUser();
-  const { data, error } = useSWR<StatusResponse>('/api/v1/status', {
-    refreshInterval: 60 * 1000,
-  });
+  const { data, error } = useSWR<StatusResponse>(
+    '/api/v1/status?checkUpdateAvailable=false',
+    {
+      refreshInterval: 60 * 1000,
+    }
+  );
   const [alertDismissed, setAlertDismissed] = useState(false);
+  const clientCommitTag = normalizeCommitTag(process.env.commitTag);
+  const serverCommitTag = normalizeCommitTag(data?.commitTag);
+  const commitMismatch = Boolean(data) && serverCommitTag !== clientCommitTag;
+  const mismatchKey = `${clientCommitTag}:${serverCommitTag}`;
 
   useEffect(() => {
     if (!data?.restartRequired) {
-      setAlertDismissed(false);
+      const dismissedMismatch =
+        typeof window !== 'undefined' &&
+        sessionStorage.getItem(COMMIT_MISMATCH_KEY) === mismatchKey;
+      if (!dismissedMismatch) {
+        setAlertDismissed(false);
+      }
     }
-  }, [data?.restartRequired]);
+  }, [data?.restartRequired, mismatchKey]);
+
+  useEffect(() => {
+    if (
+      typeof window !== 'undefined' &&
+      sessionStorage.getItem(COMMIT_MISMATCH_KEY) === mismatchKey
+    ) {
+      setAlertDismissed(true);
+    }
+  }, [mismatchKey]);
 
   if (!data && !error) {
     return null;
@@ -41,6 +67,13 @@ const StatusChecker = () => {
   if (!data) {
     return null;
   }
+
+  const dismissMismatch = () => {
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem(COMMIT_MISMATCH_KEY, mismatchKey);
+    }
+    setAlertDismissed(true);
+  };
 
   return (
     <Transition
@@ -55,7 +88,7 @@ const StatusChecker = () => {
       show={
         !alertDismissed &&
         ((hasPermission(Permission.ADMIN) && data.restartRequired) ||
-          data.commitTag !== process.env.commitTag)
+          commitMismatch)
       }
     >
       {hasPermission(Permission.ADMIN) && data.restartRequired ? (
@@ -64,9 +97,6 @@ const StatusChecker = () => {
           backgroundClickable={false}
           onOk={() => {
             setAlertDismissed(true);
-            if (data.commitTag !== process.env.commitTag) {
-              location.reload();
-            }
           }}
           okText={intl.formatMessage(globalMessages.close)}
         >
@@ -77,7 +107,10 @@ const StatusChecker = () => {
           title={intl.formatMessage(messages.appUpdated, {
             applicationTitle: settings.currentSettings.applicationTitle,
           })}
-          onOk={() => location.reload()}
+          onOk={() => {
+            dismissMismatch();
+            location.reload();
+          }}
           okText={intl.formatMessage(messages.reloadApp, {
             applicationTitle: settings.currentSettings.applicationTitle,
           })}

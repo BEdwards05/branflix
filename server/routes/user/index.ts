@@ -240,13 +240,13 @@ router.post<
         const transactionalRepo =
           transactionalEntityManager.getRepository(UserPushSubscription);
 
-        // Check for existing subscription by auth or endpoint within transaction
+        // Check for existing subscription by endpoint within transaction
         const existingSubscription = await transactionalRepo.findOne({
           relations: { user: true },
-          where: [
-            { auth: req.body.auth, user: { id: req.user?.id } },
-            { endpoint: req.body.endpoint, user: { id: req.user?.id } },
-          ],
+          where: {
+            endpoint: req.body.endpoint,
+            user: { id: req.user?.id },
+          },
         });
 
         if (existingSubscription) {
@@ -275,17 +275,15 @@ router.post<
           return;
         }
 
-        // Clean up old subscriptions from the same device (userAgent) for this user
-        // iOS can silently refresh endpoints, leaving stale subscriptions in the database
-        // Only clean up if we're creating a new subscription (not updating an existing one)
-        if (req.body.userAgent) {
+        // Clean up only true endpoint rotations. Same push-service subscription
+        // (matched by `auth`) but with a stale endpoint. Matching on `auth`
+        // avoids deleting sibling devices that only share a user agent.
+        if (req.body.auth) {
           const staleSubscriptions = await transactionalRepo.find({
             relations: { user: true },
             where: {
-              userAgent: req.body.userAgent,
               user: { id: req.user?.id },
-              // Only remove subscriptions with different endpoints (stale ones)
-              // Keep subscriptions that might be from different browsers/tabs
+              auth: req.body.auth,
               endpoint: Not(req.body.endpoint),
             },
           });
@@ -644,6 +642,7 @@ router.post(
 
       const plexUsersResponse = await mainPlexTv.getUsers();
       const createdUsers: User[] = [];
+      let refreshedUsers = 0;
       for (const rawUser of plexUsersResponse.MediaContainer.User) {
         const account = rawUser.$;
 
@@ -668,6 +667,7 @@ router.post(
               user.plexId = parseInt(account.id);
             }
             await userRepository.save(user);
+            refreshedUsers += 1;
           } else if (!body || body.plexIds.includes(account.id)) {
             if (await mainPlexTv.checkUserAccess(parseInt(account.id))) {
               const newUser = new User({
@@ -686,7 +686,10 @@ router.post(
         }
       }
 
-      return res.status(201).json(User.filterMany(createdUsers));
+      return res.status(201).json({
+        createdUsers: User.filterMany(createdUsers),
+        refreshedUsers,
+      });
     } catch (e) {
       next({ status: 500, message: e.message });
     }

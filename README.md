@@ -39,8 +39,19 @@ Open http://localhost:5055 and complete the setup wizard:
 
 ## Docker
 
+Production uses `docker-compose.yml`. Do not run the default `compose.yaml` /
+`compose.dev.yaml` on a live server; that file starts a nodemon bind-mount
+for local development.
+
 ```bash
-docker compose up -d --build
+docker compose -f docker-compose.yml up -d --build
+```
+
+The image runs as UID `1000` (`node`). If `config/` was previously written
+as root (the old nodemon stack), fix ownership before starting:
+
+```bash
+chown -R 1000:1000 config
 ```
 
 BranFlix listens on port **5055**. Configuration is persisted in `./config`.
@@ -78,8 +89,11 @@ git checkout main
 git pull
 
 docker compose down
-docker compose up -d --build
+chown -R 1000:1000 config
+docker compose -f docker-compose.yml up -d --build
 ```
+
+`chown` is required if `config/` was written as root by the old nodemon stack.
 
 Configuration is stored in `./config` on the host, so it survives image rebuilds.
 The local image (`branflix:local`) must be rebuilt after each pull.
@@ -89,7 +103,7 @@ To deploy a specific version:
 ```bash
 git fetch --tags
 git checkout <tag>    # e.g. v0.1.0
-docker compose up -d --build
+docker compose -f docker-compose.yml up -d --build
 ```
 
 ### From source
