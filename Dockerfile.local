@@ -9,4 +9,6 @@ WORKDIR /app
 
 RUN pnpm install
 
-CMD pnpm dev
+# Bind-mounted source plus an anonymous node_modules volume can lag behind
+# package.json. Reinstall on start so new deps (e.g. lru-cache) are present.
+CMD pnpm install && pnpm dev

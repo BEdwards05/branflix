@@ -1,3 +1,5 @@
+# Production stack. `docker compose` uses this file once compose.yaml is absent.
+# Local bind-mount development: docker compose -f compose.dev.yaml up
 services:
   branflix:
     build:
