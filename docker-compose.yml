@@ -11,6 +11,7 @@ services:
     ports:
       - "${HOST_PORT:-5055}:5055"
     volumes:
+      # Image user is UID 1000. After the old rootful stack: chown -R 1000:1000 ./config
       - ./config:/app/config
     environment:
       LOG_LEVEL: ${LOG_LEVEL:-info}

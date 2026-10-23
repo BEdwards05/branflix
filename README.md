@@ -47,6 +47,13 @@ for local development.
 docker compose -f docker-compose.yml up -d --build
 ```
 
+The image runs as UID `1000` (`node`). If `config/` was previously written
+as root (the old nodemon stack), fix ownership before starting:
+
+```bash
+chown -R 1000:1000 config
+```
+
 BranFlix listens on port **5055**. Configuration is persisted in `./config`.
 
 Environment variables (optional):
@@ -82,16 +89,11 @@ git checkout main
 git pull
 
 docker compose down
+chown -R 1000:1000 config
 docker compose -f docker-compose.yml up -d --build
 ```
 
-If Compose previously picked `compose.yaml` (dev/nodemon), stop that stack
-first so the production image is what comes up:
-
-```bash
-docker compose down
-docker compose -f docker-compose.yml up -d --build
-```
+`chown` is required if `config/` was written as root by the old nodemon stack.
 
 Configuration is stored in `./config` on the host, so it survives image rebuilds.
 The local image (`branflix:local`) must be rebuilt after each pull.
