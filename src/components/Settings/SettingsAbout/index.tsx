@@ -19,8 +19,6 @@ const messages = defineMessages('components.Settings.SettingsAbout', {
   githubrepo: 'GitHub Repository',
   timezone: 'Time Zone',
   appDataPath: 'Data Directory',
-  outofdate: 'Out of Date',
-  uptodate: 'Up to Date',
   runningDevelop:
     'You are running the <code>develop</code> branch of BranFlix, which is only recommended for those contributing to development or assisting with bleeding-edge testing.',
 });

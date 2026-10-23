@@ -1470,7 +1470,6 @@
   "components.Settings.SettingsMain.streamingRegion": "Регион за стрийминг",
   "components.Settings.SettingsMain.streamingRegionTip": "Показване на стрийминг платформите според регионалната им наличност",
   "components.Settings.SettingsMain.validationUrl": "Трябва да предоставите валиден URL адрес",
-  "components.Settings.SettingsMain.validationUrlTrailingSlash": "URL адресът не трябва да завършва с наклонена черта",
   "components.Settings.SettingsMain.youtubeUrl": "YouTube URL",
   "components.Settings.SettingsMain.youtubeUrlTip": "Базов URL адрес за видеоклипове, ако се използва собствена (self-hosted) инстанция на YouTube.",
   "components.Settings.SettingsNetwork.apiRequestTimeout": "Време за изчакване на API заявка (Timeout)",
@@ -1663,5 +1662,10 @@
   "i18n.notificationLocale": "Език на известията",
   "i18n.partiallyblocklisted": "Частично блокирано",
   "i18n.removeFromBlocklistSuccess": "<strong>{title}</strong> беше успешно премахнато от списъка с блокирани.",
-  "i18n.removefromBlocklist": "Премахване от списъка с блокирани"
+  "i18n.removefromBlocklist": "Премахване от списъка с блокирани",
+  "components.UserProfile.UserSettings.UserNotificationSettings.discordIdAdd": "",
+  "components.UserProfile.UserSettings.UserNotificationSettings.discordIdPlaceholder": "",
+  "components.UserProfile.UserSettings.UserNotificationSettings.discordIdRemove": "",
+  "components.Settings.Notifications.usePublicLogo": "",
+  "components.Settings.Notifications.usePublicLogoTip": ""
 }

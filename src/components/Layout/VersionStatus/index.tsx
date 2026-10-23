@@ -20,9 +20,12 @@ interface VersionStatusProps {
 
 const VersionStatus = ({ onClick }: VersionStatusProps) => {
   const intl = useIntl();
-  const { data } = useSWR<StatusResponse>('/api/v1/status', {
-    refreshInterval: 60 * 1000,
-  });
+  const { data } = useSWR<StatusResponse>(
+    '/api/v1/status?checkUpdateAvailable=false',
+    {
+      refreshInterval: 60 * 1000,
+    }
+  );
 
   if (!data) {
     return null;

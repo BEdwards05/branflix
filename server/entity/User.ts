@@ -51,6 +51,8 @@ export class User {
     'settings',
   ];
 
+  static readonly serializationExcludedFields: string[] = ['settings'];
+
   public displayName: string;
 
   @PrimaryGeneratedColumn()
@@ -171,6 +173,16 @@ export class User {
     );
 
     return filtered;
+  }
+
+  // settings is eager-loaded and would otherwise ride along into every nested User response
+  public toJSON(): Partial<User> {
+    return Object.assign(
+      {},
+      ...(Object.keys(this) as (keyof User)[])
+        .filter((k) => !User.serializationExcludedFields.includes(k))
+        .map((k) => ({ [k]: this[k] }))
+    );
   }
 
   public hasPermission(
@@ -299,6 +311,7 @@ export class User {
             ...(movieQuotaDays ? { createdAt: AfterDate(movieDate) } : {}),
             type: MediaType.MOVIE,
             status: Not(MediaRequestStatus.DECLINED),
+            ignoreQuota: false,
           },
         })
       : 0;
@@ -336,6 +349,9 @@ export class User {
     const tvQuotaUsed = tvQuotaLimit
       ? (
           await tvQuotaUsedQuery
+            .andWhere('request.ignoreQuota = :ignoreQuota', {
+              ignoreQuota: false,
+            })
             .addSelect((subQuery) => {
               return subQuery
                 .select('COUNT(season.id)', 'seasonCount')
